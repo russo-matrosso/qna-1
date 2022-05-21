@@ -9,15 +9,16 @@ feature 'User can leave an answer', %q{
   describe 'Authenticated user' do
 
     given(:user) { create(:user) }
-    given(:question) { create(:question) }
+    given(:question) { create(:question, author: user) }
 
     background do
       sign_in(user)
-      visit questions_path(question)
+      visit question_path(question)
     end
 
     scenario 'create an answer without errors' do
 
+      save_and_open_page
       fill_in 'Body', with: 'a good answer'
       click_on 'Leave an answer'
 
@@ -25,9 +26,14 @@ feature 'User can leave an answer', %q{
       expect(page).to have_content 'a good answer'
     end
 
-    scenario 'asks a question with errors' do
+    scenario 'create an answer with errors' do
       click_on 'Leave an answer'
       expect(page).to have_content "Body can't be blank"
+    end
+
+    scenario 'Unauthenticated user tries create an answer' do
+      visit question_path(question)
+      expect(page).to_not have_content 'Leave an answer'
     end
   end
 end

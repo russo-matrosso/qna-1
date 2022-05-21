@@ -1,11 +1,17 @@
 h2= @question.title
 h2= @question.body
 
+- if current_user&.author?(@question)
+  = link_to 'Delete the question', question_path(@question), method: :delete
+
+h1 Answers
 - if @question.answers.present?
-  - question.answers.each do |answer|
+  - @question.answers.each do |answer|
     div
       - if answer.persisted?
         = answer.body
-
-= render 'answers/form'
-p= link_to 'Leave an answer', new_question_answer
+        br
+        - if current_user&.author?(answer)
+        = link_to 'Delete the answer', answer_path(answer), method: :delete
+- if current_user   
+  = render 'answers/form'
