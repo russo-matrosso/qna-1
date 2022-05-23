@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 feature 'Author can delete his question', "
@@ -5,7 +7,6 @@ feature 'Author can delete his question', "
   As an authenticated user
   I'd like to be able to delete my question
 " do
-
   given(:user_author) { create(:user) }
   given(:user) { create(:user) }
   given(:question) { create(:question, author: user_author) }

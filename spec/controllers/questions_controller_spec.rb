@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) {create(:question, author: user)}
-  let(:user) {create(:user)}
+  let(:question) { create(:question, author: user) }
+  let(:user) { create(:user) }
 
   describe 'GET #index' do
-    let(:questions) {create_list(:question, 3, author: user)}
+    let(:questions) { create_list(:question, 3, author: user) }
 
     before { get :index }
 
@@ -19,8 +21,7 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
-
-    before { get :show, params: {id: question} }
+    before { get :show, params: { id: question } }
 
     it 'assigns the requested question to @question' do
       expect(assigns(:question)).to eq question
@@ -32,7 +33,6 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #new' do
-
     before { login(user) }
 
     before { get :new }
@@ -49,7 +49,7 @@ RSpec.describe QuestionsController, type: :controller do
   describe 'GET #edit' do
     before { login(user) }
 
-    before { get :edit, params: {id: question} }
+    before { get :edit, params: { id: question } }
 
     it 'assigns the edited question to @question' do
       expect(assigns(:question)).to eq question
@@ -64,23 +64,56 @@ RSpec.describe QuestionsController, type: :controller do
     before { login(user) }
     context 'with valid attributes' do
       it 'saves a new question in the database' do
-        expect { post :create, params: {question: attributes_for(:question)}}.to change(Question, :count).by(1)
+        expect { post :create, params: { question: attributes_for(:question) } }.to change(Question, :count).by(1)
       end
 
       it 'redirects to show view' do
-        post :create, params: {question: attributes_for(:question)}
+        post :create, params: { question: attributes_for(:question) }
         expect(response).to redirect_to assigns(:question)
       end
     end
 
     context 'with invalid attributes' do
       it 'does not save the question' do
-        expect { post :create, params: {question: attributes_for(:question, :invalid)}}.to_not change(Question, :count)
+        expect do
+          post :create, params: { question: attributes_for(:question, :invalid) }
+        end.to_not change(Question, :count)
       end
 
       it 're-renders new view' do
-        post :create, params: {question: attributes_for(:question, :invalid)}
+        post :create, params: { question: attributes_for(:question, :invalid) }
         expect(response).to render_template :new
+      end
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    let!(:question) { create(:question, author: user) }
+
+    context 'Author' do
+      before { login(user) }
+
+      it 'deletes the question' do
+        expect { delete :destroy, params: { id: question } }.to change(Question, :count).by(-1)
+      end
+
+      it 'redirect to index' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
+      end
+    end
+
+    context 'Not author' do
+      let(:not_author) { create(:user) }
+      before { login(not_author) }
+
+      it 'try delete the question' do
+        expect { delete :destroy, params: { id: question } }.to_not change(Question, :count)
+      end
+
+      it 'redirect to list of question' do
+        delete :destroy, params: { id: question }
+        expect(response).to redirect_to questions_path
       end
     end
   end

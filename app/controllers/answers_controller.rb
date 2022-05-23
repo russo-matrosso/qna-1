@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class AnswersController < ApplicationController
   before_action :authenticate_user!
-  
+
   def create
     @answer = question.answers.new(answer_params)
     @answer.author = current_user
@@ -19,7 +21,6 @@ class AnswersController < ApplicationController
     else
       redirect_to question_path(answer.question)
     end
-
   end
 
   private
@@ -37,5 +38,4 @@ class AnswersController < ApplicationController
   end
 
   helper_method :question, :answer
-
 end

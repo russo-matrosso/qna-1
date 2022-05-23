@@ -1,17 +1,17 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'User can sign in', %q{
+feature 'User can sign in', "
   In order to ask questions
   As a unauthenticated user
   I'd like to be able to sign in
-} do
-
+" do
   given(:user) { create(:user) }
 
   background { visit new_user_session_path }
 
   scenario 'Registered user tries to sign in' do
-
     fill_in 'Email', with: user.email
     fill_in 'Password', with: user.password
     click_on 'Log in'

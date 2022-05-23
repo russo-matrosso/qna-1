@@ -1,13 +1,13 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'User can leave an answer', %q{
+feature 'User can leave an answer', "
   In order to help people from a community
   As an authenticated user
   I'd like to be able to leave an answer to a question
-} do
-
+" do
   describe 'Authenticated user' do
-
     given(:user) { create(:user) }
     given(:question) { create(:question, author: user) }
 
@@ -17,7 +17,6 @@ feature 'User can leave an answer', %q{
     end
 
     scenario 'create an answer without errors' do
-
       save_and_open_page
       fill_in 'Body', with: 'a good answer'
       click_on 'Leave an answer'

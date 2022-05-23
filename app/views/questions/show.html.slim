@@ -13,5 +13,7 @@ h1 Answers
         br
         - if current_user&.author?(answer)
         = link_to 'Delete the answer', answer_path(answer), method: :delete
+- else
+  p no answers        
 - if current_user   
   = render 'answers/form'

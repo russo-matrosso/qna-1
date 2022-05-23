@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class QuestionsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :load_question, only: [:show, :edit, :destroy]
+  before_action :authenticate_user!, except: %i[index show]
+  before_action :load_question, only: %i[show edit destroy]
 
   def index
     @questions = Question.all
@@ -14,8 +16,7 @@ class QuestionsController < ApplicationController
     @question = current_user.questions.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @question = Question.new(question_params)

@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
-feature 'User can register and auth', %q{
+feature 'User can register and auth', '
   In order to get question from a community
   As an authenticated user
   I`d like to be able to ask the question
-} do
-
+' do
   given(:user) { create(:user) }
 
   scenario 'User can register' do
