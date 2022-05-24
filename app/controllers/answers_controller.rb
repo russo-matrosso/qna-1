@@ -1,12 +1,25 @@
+# frozen_string_literal: true
+
 class AnswersController < ApplicationController
-  
+  before_action :authenticate_user!
+
   def create
     @answer = question.answers.new(answer_params)
+    @answer.author = current_user
 
     if @answer.save
-      redirect_to @answer
+      redirect_to @answer.question, notice: 'Your answer successfully created.'
     else
-      render :new
+      render 'questions/show'
+    end
+  end
+
+  def destroy
+    if current_user.author?(answer)
+      answer.destroy
+      redirect_to question_path(answer.question), notice: 'Your answer successfully deleted.'
+    else
+      redirect_to question_path(answer.question)
     end
   end
 
@@ -21,9 +34,8 @@ class AnswersController < ApplicationController
   end
 
   def answer
-  	@answer ||= Answer.find(params[:id])
+    @answer ||= params[:id] ? Answer.find(params[:id]) : question.answers.new
   end
 
   helper_method :question, :answer
-
 end
