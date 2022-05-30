@@ -1,13 +1,8 @@
-h2= @question.title
-h2= @question.body
+h2 Question
+= render @question
 
-- if current_user&.author?(@question)
-  = link_to 'Delete the question', question_path(@question), method: :delete
-
-
-h1 Answers
+h3 Answers
 .answers
-- if @question.answers.present?
   = render @question.answers
 
 - if current_user   

@@ -7,6 +7,11 @@ class AnswersController < ApplicationController
     @answer = question.answers.create(answer_params.merge(author: current_user))
   end
 
+  def update
+    answer.update(answer_params) if current_user.author?(answer)
+    @question = answer.question
+  end
+
   def destroy
     if current_user.author?(answer)
       answer.destroy

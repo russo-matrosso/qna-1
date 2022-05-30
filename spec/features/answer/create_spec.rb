@@ -17,7 +17,7 @@ feature 'User can leave an answer', "
     end
 
     scenario 'create an answer without errors' do
-      #save_and_open_page
+      # save_and_open_page
       fill_in 'Body', with: 'a good answer'
       click_on 'Leave an answer'
 
