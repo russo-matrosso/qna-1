@@ -1,0 +1,8 @@
+.answer id="answer-#{@question.best_answer.id}"
+  div
+    = 'The best answer: '
+  div
+    = 'Author: '
+    = @question.best_answer.author.email
+  div
+    = @question.best_answer.body
