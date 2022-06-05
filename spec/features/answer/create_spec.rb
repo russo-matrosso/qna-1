@@ -32,6 +32,16 @@ feature 'User can leave an answer', "
       expect(page).to have_content "Body can't be blank"
     end
 
+    scenario 'create an answer with attached file' do
+      fill_in 'Body', with: 'a good answer'
+
+      attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+      click_on 'Leave an answer'
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'rails_helper.rb'
+    end
+
     scenario 'Unauthenticated user tries create an answer' do
       visit question_path(question)
       expect(page).to_not have_content 'Leave an answer'
