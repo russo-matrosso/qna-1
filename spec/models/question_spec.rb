@@ -15,7 +15,7 @@ RSpec.describe Question, type: :model do
   end
 
   describe 'attached file' do
-    it 'have one attached file' do
+    it 'have many attached files' do
       expect(Question.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
     end
   end
