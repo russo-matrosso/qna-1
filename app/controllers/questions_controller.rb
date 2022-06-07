@@ -19,7 +19,7 @@ class QuestionsController < ApplicationController
   def edit; end
 
   def create
-    @question = Question.new(question_params)
+    @question = current_user.questions.create(question_params)
     @question.author = current_user
 
     if @question.save

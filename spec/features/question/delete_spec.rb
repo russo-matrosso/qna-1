@@ -34,7 +34,7 @@ feature 'Author can delete his question', "
     sign_in(user_author)
 
     visit question_path(question_with_attachments)
-    #save_and_open_page
+    # save_and_open_page
     click_on 'Delete the file'
     expect(page).to_not have_link 'rails_helper.rb'
   end
