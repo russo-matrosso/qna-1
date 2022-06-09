@@ -17,12 +17,14 @@ feature 'User can edit his answer', "
   end
 
   describe 'Authenticated user' do
-    scenario 'edits his answer', js: true do
+    background do
       sign_in(user)
       visit question_path(question)
-      save_and_open_page
-
+      # save_and_open_page
       click_on 'Edit'
+    end
+
+    scenario 'edits his answer', js: true do
       within '.answers' do
         fill_in 'Your answer', with: 'edited answer'
 
@@ -33,7 +35,15 @@ feature 'User can edit his answer', "
       end
     end
 
-    # scenario 'edits his answer with errors'
-    # scenario "tries to edit other user's question"
+    scenario 'add files while editing an answer', js: true do
+      within '.answers' do
+        fill_in 'Your answer', with: 'Edited answer'
+        attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+        click_on 'Save'
+
+        expect(page).to have_link 'rails_helper.rb'
+        expect(page).to have_link 'rails_helper.rb'
+      end
+    end
   end
 end

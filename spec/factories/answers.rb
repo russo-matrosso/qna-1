@@ -10,4 +10,11 @@ FactoryBot.define do
       body { nil }
     end
   end
+
+  trait :with_attachments do
+    after :create do |answer|
+      answer.files.attach(io: File.open("#{Rails.root}/spec/rails_helper.rb"),
+                          filename: 'rails_helper.rb')
+    end
+  end
 end
