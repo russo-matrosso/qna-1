@@ -22,9 +22,7 @@ feature 'User can add links to question', "
     fill_in 'Link name', with: 'My gist'
     fill_in 'Url', with: gist_url
 
-
     click_on 'Ask'
-
 
     expect(page).to have_link 'My gist', href: gist_url
   end
@@ -59,12 +57,10 @@ feature 'User can add links to question', "
       fill_in 'Link name', with: 'Valid link'
       fill_in 'Url', with: valid_url
     end
-    
 
     click_on 'Ask a question'
 
     save_and_open_page
-
 
     expect(page).to have_link 'Good link', href: valid_url
     expect(page).to have_link 'Valid link', href: valid_url
