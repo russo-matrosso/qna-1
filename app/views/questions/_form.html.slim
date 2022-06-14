@@ -1,7 +1,7 @@
 = render 'shared/errors', resource: @question
 .question-errors
 
-= form_with model: @question, local: true do |f|
+= form_with model: @question do |f|
   p
     = f.label :title
     = f.text_field :title
@@ -10,7 +10,7 @@
     = f.text_area :body
   p  
     = f.label :files
-    = f.file_field :files, multiple: true, direct_upload: true
+    = f.file_field :files, multiple: true
 
     p Links:
     = f.fields_for :links do |l|

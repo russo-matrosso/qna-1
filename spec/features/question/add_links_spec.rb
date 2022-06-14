@@ -10,9 +10,24 @@ feature 'User can add links to question', "
   given(:user) { create(:user) }
   given(:gist_url) { 'https://gist.github.com/leri-berry/b7147f15b7e6f4301f7b3c08e9678dc2' }
   given(:valid_url) { 'https://google.com' }
-  given(:invalid_url) { 'google.com' }
+  given(:invalid_url) { 'invalid.com' }
 
-  scenario 'User adds link when asks question', js: true do
+  scenario 'User add valid link when asks question', js: true do
+    sign_in(user)
+    visit new_question_path
+
+    fill_in 'Title', with: 'Test question'
+    fill_in 'Body', with: 'text text text'
+
+    fill_in 'Link name', with: 'My valid link'
+    fill_in 'Url', with: valid_url
+
+    click_on 'Ask a question'
+
+    expect(page).to have_link 'My valid link', href: valid_url
+  end
+
+  scenario 'User add gist when asks question', js: true do
     sign_in(user)
     visit new_question_path
 
@@ -22,7 +37,7 @@ feature 'User can add links to question', "
     fill_in 'Link name', with: 'My gist'
     fill_in 'Url', with: gist_url
 
-    click_on 'Ask'
+    click_on 'Ask a question'
 
     expect(page).to have_link 'My gist', href: gist_url
   end
@@ -31,38 +46,13 @@ feature 'User can add links to question', "
     sign_in(user)
     visit new_question_path
 
-    within('.nested-fields') do
-      fill_in 'Link name', with: 'Invalid link'
-      fill_in 'Url', with: invalid_url
-    end
-
-    click_on 'Ask a question'
-
-    expect(page).to have_content 'is not a valid URL'
-  end
-
-  scenario 'User can add several links when asks a question', js: true do
-    sign_in(user)
-    visit new_question_path
-
     fill_in 'Title', with: 'Test question'
     fill_in 'Body', with: 'text text text'
 
-    fill_in 'Link name', with: 'Good link'
-    fill_in 'Url', with: valid_url
-
-    click_on 'add link'
-
-    within('.nested-fields') do
-      fill_in 'Link name', with: 'Valid link'
-      fill_in 'Url', with: valid_url
-    end
+    fill_in 'Link name', with: 'My invalid link'
+    fill_in 'Url', with: invalid_url
 
     click_on 'Ask a question'
-
-    save_and_open_page
-
-    expect(page).to have_link 'Good link', href: valid_url
-    expect(page).to have_link 'Valid link', href: valid_url
+    expect(page).to_not have_link 'My link', href: invalid_url
   end
 end
