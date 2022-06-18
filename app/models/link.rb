@@ -8,4 +8,8 @@ class Link < ApplicationRecord
     with: URI::DEFAULT_PARSER.make_regexp(%w[http https]),
     message: 'is not a valid URL'
   }
+
+  def is_a_gist?
+    url.start_with?('https://gist.github.com')
+  end
 end

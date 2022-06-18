@@ -12,5 +12,6 @@ class Answer < ApplicationRecord
 
   def mark_as_best
     question.update(best_answer_id: id)
+    question.award&.update!(user: author)
   end
 end

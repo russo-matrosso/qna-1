@@ -18,4 +18,13 @@
     .links
       = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields'
 
+    p Award:
+    = f.fields_for :award do |a|
+      p
+        = a.label :name, 'Award title'
+        = a.text_field :name
+      p
+        = a.label :image
+        = a.file_field :image
+
   p = f.submit 'Ask a question'

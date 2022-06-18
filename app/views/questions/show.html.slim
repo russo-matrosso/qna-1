@@ -1,11 +1,7 @@
 h2 Question
 = render @question
 
-.links
-  p Links:
-  ul
-    - @question.links.each do |link|
-      li= link_to link.name, link.url
+
 
 h3 Answers
 .answers

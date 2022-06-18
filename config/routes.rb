@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   devise_for :users
 
   resources :attachments, only: :destroy
+  resources :links, only: :destroy
+  resources :awards, only: :index
 
   resources :questions do
     resources :answers, shallow: true do
