@@ -14,15 +14,45 @@ p = question.body
           - if current_user&.author?(@question)
             = link_to 'Delete the file', attachment_path(file.id), method: :delete, remote: true
 
+  .links
+  p Links:
+  - @question.links.each do |link|
+    div id="link_#{link.id}"
+      = link_to link.name, link.url
+      - if link.is_a_gist?
+        = javascript_include_tag link.url + '.js'
+
+      - if current_user&.author?(@question)
+        p = link_to 'Delete link', link_path(link.id), method: :delete, remote: true
+
+  .award
+  p Award:
+  ul
+    - if @question.award
+      = @question.award.name
+      = image_tag(@question.award.image, size: "50x50")
+
+
   - if current_user&.author?(@question)
     p= link_to 'Delete the question', question_path(@question), method: :delete
     p= link_to 'Edit the question', '#', class: 'edit-question-link', data: { question_id: question.id }
 
     = form_with model: @question, class: 'hidden', local: false, html: { id: "edit-question-#{question.id}" } do |f|
-      = f.label :title
-      = f.text_field :title
-      = f.label :body, 'Your question'
-      = f.text_area :body
-      = f.label :files
-      = f.file_field :files, multiple: true, direct_upload: true
+      p
+        = f.label :title
+        = f.text_field :title
+      p
+        = f.label :body, 'Your question'
+        = f.text_area :body
+      p
+        = f.label :files
+        = f.file_field :files, multiple: true, direct_upload: true
+        
+        p Links:
+        = f.fields_for :links do |l|
+          = render 'shared/link_fields', f: l
+        .links
+          = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields'
+      p    
+      
       = f.submit 'Save'

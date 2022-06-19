@@ -45,5 +45,19 @@ feature 'User can edit his answer', "
         expect(page).to have_link 'rails_helper.rb'
       end
     end
+
+    scenario 'add links while editing a question', js: true do
+      within '.answers' do
+        fill_in 'Your answer', with: 'Edited answer'
+        click_on 'add link'
+
+        fill_in 'Link name', with: 'Google'
+        fill_in 'Url', with: 'http://google.com'
+
+        click_on 'Save'
+
+        expect(page).to have_link 'Google', href: 'http://google.com'
+      end
+    end
   end
 end

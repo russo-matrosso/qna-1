@@ -56,6 +56,23 @@ feature 'User can edit his question', "
         expect(page).to have_link 'rails_helper.rb'
       end
     end
+
+    scenario 'add links while editing a question', js: true do
+      within "#question-#{question.id}" do
+        fill_in 'Title', with: 'edited title'
+        fill_in 'Your question', with: 'edited question'
+        click_on 'add link'
+
+        fill_in 'Link name', with: 'Google'
+        fill_in 'Url', with: 'http://google.com'
+
+        save_and_open_page
+
+        click_on 'Save'
+
+        expect(page).to have_link 'Google', href: 'http://google.com'
+      end
+    end
   end
 
   describe 'Not author' do

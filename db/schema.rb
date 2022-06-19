@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_220_604_144_758) do
+ActiveRecord::Schema.define(version: 20_220_618_075_656) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -48,6 +48,26 @@ ActiveRecord::Schema.define(version: 20_220_604_144_758) do
     t.index ['user_id'], name: 'index_answers_on_user_id'
   end
 
+  create_table 'awards', force: :cascade do |t|
+    t.string 'name'
+    t.bigint 'question_id'
+    t.bigint 'user_id'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index ['question_id'], name: 'index_awards_on_question_id'
+    t.index ['user_id'], name: 'index_awards_on_user_id'
+  end
+
+  create_table 'links', force: :cascade do |t|
+    t.string 'name'
+    t.string 'url'
+    t.string 'linkable_type'
+    t.bigint 'linkable_id'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index %w[linkable_type linkable_id], name: 'index_links_on_linkable_type_and_linkable_id'
+  end
+
   create_table 'questions', force: :cascade do |t|
     t.string 'title'
     t.text 'body'
@@ -74,6 +94,8 @@ ActiveRecord::Schema.define(version: 20_220_604_144_758) do
   add_foreign_key 'active_storage_attachments', 'active_storage_blobs', column: 'blob_id'
   add_foreign_key 'answers', 'questions'
   add_foreign_key 'answers', 'users'
+  add_foreign_key 'awards', 'questions'
+  add_foreign_key 'awards', 'users'
   add_foreign_key 'questions', 'answers', column: 'best_answer_id'
   add_foreign_key 'questions', 'users'
 end

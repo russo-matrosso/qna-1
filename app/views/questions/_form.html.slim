@@ -1,7 +1,7 @@
 = render 'shared/errors', resource: @question
 .question-errors
 
-= form_with model: @question, local: true do |f|
+= form_with model: @question do |f|
   p
     = f.label :title
     = f.text_field :title
@@ -10,5 +10,21 @@
     = f.text_area :body
   p  
     = f.label :files
-    = f.file_field :files, multiple: true, direct_upload: true
-    = f.submit 'Ask a question'
+    = f.file_field :files, multiple: true
+
+    p Links:
+    = f.fields_for :links do |l|
+      = render 'shared/link_fields', f: l
+    .links
+      = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields'
+
+    p Award:
+    = f.fields_for :award do |a|
+      p
+        = a.label :name, 'Award title'
+        = a.text_field :name
+      p
+        = a.label :image
+        = a.file_field :image
+
+  p = f.submit 'Ask a question'
