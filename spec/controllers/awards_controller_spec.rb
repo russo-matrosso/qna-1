@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe AwardsController, type: :controller do
-	let!(:user) { create(:user) }
+  let!(:user) { create(:user) }
   let!(:question) { create(:question, author: user) }
   let!(:award) { create(:award, question: question, user: user) }
 
@@ -19,5 +21,4 @@ RSpec.describe AwardsController, type: :controller do
       expect(response).to render_template :index
     end
   end
-
 end

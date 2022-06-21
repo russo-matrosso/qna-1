@@ -9,6 +9,7 @@ RSpec.describe Question, type: :model do
     it { should have_one(:award).dependent(:destroy) }
     it { should belong_to(:author).class_name('User') }
     it { should belong_to(:best_answer).class_name('Answer').optional }
+    it { should have_many(:votes).dependent(:destroy) }
   end
 
   describe 'validations' do
@@ -22,5 +23,9 @@ RSpec.describe Question, type: :model do
     it 'have many attached files' do
       expect(Question.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
     end
+  end
+
+  describe Question do
+    it_behaves_like 'votable'
   end
 end

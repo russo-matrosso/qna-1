@@ -1,5 +1,6 @@
 p = question.title
 p = question.body
+p = render 'shared/vote', resource: question
 
 .question id="question-#{question.id}"
   .question-errors
