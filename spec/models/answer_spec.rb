@@ -10,6 +10,7 @@ RSpec.describe Answer, type: :model do
     it { should belong_to :question }
     it { should belong_to(:author).class_name('User') }
     it { should have_many(:links).dependent(:destroy) }
+    it { should have_many(:votes).dependent(:destroy) }
   end
 
   describe 'validations' do
@@ -20,5 +21,9 @@ RSpec.describe Answer, type: :model do
   describe 'mark_as_best' do
     before { answer.mark_as_best }
     it { expect(question.best_answer).to eq answer }
+  end
+
+  describe Answer do
+    it_behaves_like 'votable'
   end
 end

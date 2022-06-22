@@ -1,10 +1,21 @@
 # frozen_string_literal: true
 
 class AnswersController < ApplicationController
+  include Voted
   before_action :authenticate_user!
 
   def create
     @answer = question.answers.create(answer_params.merge(author: current_user))
+
+    respond_to do |format|
+      if @answer.save
+        format.json { render json: @answer }
+      else
+        format.json do
+          render json: @answer.errors.full_messages, status: :unprocessable_entity
+        end
+      end
+    end
   end
 
   def update
