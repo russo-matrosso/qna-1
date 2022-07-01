@@ -47,3 +47,9 @@
         = link_to_add_association 'add link', f, :links, partial: 'shared/link_fields'
     p    
   	= f.submit 'Save'
+
+.answer_comments
+  p Comments:
+  = render answer.comments
+- if current_user
+  = render 'comments/form_answer', answer: answer    

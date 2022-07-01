@@ -2,6 +2,7 @@
 
 class Question < ApplicationRecord
   include Votable
+  include Commentable
 
   belongs_to :author, class_name: 'User', foreign_key: 'user_id'
   belongs_to :best_answer, class_name: 'Answer', optional: true
@@ -10,6 +11,7 @@ class Question < ApplicationRecord
   has_many :links, dependent: :destroy, as: :linkable
   has_one :award, dependent: :destroy
   has_many :votes, dependent: :destroy, as: :votable
+  has_many :comments, dependent: :destroy, as: :commentable
 
   has_many_attached :files
 

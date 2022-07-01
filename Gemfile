@@ -19,6 +19,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'mini_racer', platforms: :ruby
 gem 'bootstrap'
 gem 'cocoon'
+gem 'gon'
 gem 'jquery-rails'
 gem 'rubocop-rails'
 

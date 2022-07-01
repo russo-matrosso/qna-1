@@ -12,7 +12,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_220_620_064_514) do
+ActiveRecord::Schema.define(version: 20_220_630_075_119) do
   # These are extensions that must be enabled in order to support this database
   enable_extension 'plpgsql'
 
@@ -56,6 +56,17 @@ ActiveRecord::Schema.define(version: 20_220_620_064_514) do
     t.datetime 'updated_at', precision: 6, null: false
     t.index ['question_id'], name: 'index_awards_on_question_id'
     t.index ['user_id'], name: 'index_awards_on_user_id'
+  end
+
+  create_table 'comments', force: :cascade do |t|
+    t.text 'body'
+    t.string 'commentable_type'
+    t.bigint 'commentable_id'
+    t.bigint 'user_id'
+    t.datetime 'created_at', precision: 6, null: false
+    t.datetime 'updated_at', precision: 6, null: false
+    t.index %w[commentable_type commentable_id], name: 'index_comments_on_commentable_type_and_commentable_id'
+    t.index ['user_id'], name: 'index_comments_on_user_id'
   end
 
   create_table 'links', force: :cascade do |t|
@@ -105,6 +116,7 @@ ActiveRecord::Schema.define(version: 20_220_620_064_514) do
   add_foreign_key 'answers', 'users'
   add_foreign_key 'awards', 'questions'
   add_foreign_key 'awards', 'users'
+  add_foreign_key 'comments', 'users'
   add_foreign_key 'questions', 'answers', column: 'best_answer_id'
   add_foreign_key 'questions', 'users'
   add_foreign_key 'votes', 'users'
