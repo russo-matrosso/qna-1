@@ -29,8 +29,9 @@ module Commented
   if @comment.errors.any?
     return
   end
+  id = @comment.commentable_type == "Answer" ? @comment.commentable.question.id : @comment.commentable.id
 
-  ActionCable.server.broadcast("comments", {
+  ActionCable.server.broadcast("comments/#{id}", {
       partial: ApplicationController.render(partial: 'comments/comment',
                                             locals: { comment: @comment }),
       comment: @comment})

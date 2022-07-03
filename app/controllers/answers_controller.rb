@@ -58,7 +58,7 @@ class AnswersController < ApplicationController
     return if @answer.errors.any?
 
     ActionCable.server.broadcast(
-      'answers',
+      "answers/#{params[:question_id]}",
       ApplicationController.render(
         partial: 'answers/answer_channel',
         locals: { answer: @answer }
