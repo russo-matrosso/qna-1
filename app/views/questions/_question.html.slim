@@ -57,3 +57,9 @@ p = render 'shared/vote', resource: question
       p    
       
       = f.submit 'Save'
+
+  .question_comments
+    p Comments
+    = render question.comments
+  - if current_user
+    = render 'comments/form_question', resource: question

@@ -2,7 +2,10 @@
 
 class AnswersController < ApplicationController
   include Voted
+  include Commented
+
   before_action :authenticate_user!
+  after_action :publish_answer, only: [:create]
 
   def create
     @answer = question.answers.create(answer_params.merge(author: current_user))
@@ -49,6 +52,18 @@ class AnswersController < ApplicationController
 
   def answer
     @answer ||= params[:id] ? Answer.find(params[:id]) : question.answers.new
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    ActionCable.server.broadcast(
+      "answers/#{params[:question_id]}",
+      ApplicationController.render(
+        partial: 'answers/answer_channel',
+        locals: { answer: @answer }
+      )
+    )
   end
 
   helper_method :question, :answer
