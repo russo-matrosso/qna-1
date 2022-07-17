@@ -53,7 +53,6 @@ gem 'slim-rails'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  #gem 'capybara-email'
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 5.0.0'
 end
@@ -72,7 +71,6 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
-  # gem 'chromedriver-helper'
   gem 'launchy'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers'
