@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -21,13 +19,13 @@ gem 'bootstrap'
 gem 'cocoon'
 gem 'gon'
 gem 'jquery-rails'
+gem 'letter_opener'
 gem 'omniauth'
 gem 'omniauth-github'
-gem 'omniauth-vkontakte'
 gem 'omniauth-rails_csrf_protection'
+gem 'omniauth-vkontakte'
 gem 'rubocop-rails'
-gem 'letter_opener'
-
+gem 'capybara-email'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
@@ -55,9 +53,9 @@ gem 'slim-rails'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  #gem 'capybara-email'
   gem 'factory_bot_rails'
   gem 'rspec-rails', '~> 5.0.0'
-  gem 'capybara-email'
 end
 
 group :development do
@@ -74,7 +72,7 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
-  #gem 'chromedriver-helper'
+  # gem 'chromedriver-helper'
   gem 'launchy'
   gem 'rails-controller-testing'
   gem 'shoulda-matchers'
