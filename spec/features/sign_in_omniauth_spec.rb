@@ -33,15 +33,15 @@ feature 'Authorization from providers', %q{
   end
 
   describe 'Sign in with Vkontakte' do
-  	scenario 'sign in user' do
-  		mock_auth_hash(:vkontakte, 'new@user.com')
-  		click_on 'Sign in with Vkontakte'
+    scenario 'sign in user' do
+      mock_auth_hash(:vkontakte, 'new@user.com')
+      click_on 'Sign in with Vkontakte'
 
-  		expect(page).to have_content 'Successfully authenticated from Vkontakte account.'
-  	end
+      expect(page).to have_content 'Successfully authenticated from Vkontakte account.'
+    end
 
-  	scenario "oauth provider doesn't have user's email" do
-  		mock_auth_hash(:vkontakte)
+    scenario "oauth provider doesn't have user's email" do
+      mock_auth_hash(:vkontakte)
       click_on 'Sign in with Vkontakte'
 
       expect(page).to have_content 'Enter your email'
@@ -51,6 +51,6 @@ feature 'Authorization from providers', %q{
       open_email('new@mail.ru')
       current_email.click_link 'Confirm my account'
       expect(page).to have_content 'Your email address has been successfully confirmed.'
-  	end
+    end
   end
 end
