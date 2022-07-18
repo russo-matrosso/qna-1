@@ -1,5 +1,4 @@
 module Commented
-
   extend ActiveSupport::Concern
 
   included do
@@ -7,9 +6,8 @@ module Commented
   end
 
   def make_comment
-  	@comment = set_commentable.comments.create(comment_params.merge(user: current_user))
+    @comment = set_commentable.comments.create(comment_params.merge(user: current_user))
   end
-
 
   private
 
@@ -25,15 +23,15 @@ module Commented
     model_klass.find(params[:id])
   end
 
- def publish_comment
-  if @comment.errors.any?
-    return
-  end
-  id = @comment.commentable_type == "Answer" ? @comment.commentable.question.id : @comment.commentable.id
+  def publish_comment
+    return if @comment.errors.any?
 
-  ActionCable.server.broadcast("comments/#{id}", {
-      partial: ApplicationController.render(partial: 'comments/comment',
-                                            locals: { comment: @comment }),
-      comment: @comment})
+    id = @comment.commentable_type == 'Answer' ? @comment.commentable.question.id : @comment.commentable.id
+
+    ActionCable.server.broadcast("comments/#{id}", {
+                                   partial: ApplicationController.render(partial: 'comments/comment',
+                                                                         locals: { comment: @comment }),
+                                   comment: @comment
+                                 })
   end
 end

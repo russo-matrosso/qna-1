@@ -1,0 +1,7 @@
+h2 Enter your email
+
+= form_with url: users_set_email_path, method: :post do |f|
+  = f.label :email
+  = f.email_field :email, class: "form-control"
+
+  = f.submit 'Submit', class: 'btn btn-primary mt-3'
