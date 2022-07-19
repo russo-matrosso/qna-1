@@ -7,6 +7,8 @@ class QuestionsController < ApplicationController
 
   after_action :publish_question, only: [:create]
 
+  authorize_resource
+
   def index
     @questions = Question.all
   end
@@ -18,6 +20,7 @@ class QuestionsController < ApplicationController
   end
 
   def new
+    #authorize! :create, Question
     @question = current_user.questions.new
     @question.links.new
     @question.build_award

@@ -1,3 +1,4 @@
+- if can?(:create, Question)
 p= link_to 'Ask a question', new_question_path
 .questions
     - @questions.each do |question|

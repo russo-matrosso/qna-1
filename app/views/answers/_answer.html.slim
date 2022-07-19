@@ -13,7 +13,7 @@
       li= link_to link.name, link.url
       - if link.is_a_gist?
         = javascript_include_tag link.url + '.js'
-      - if current_user&.author?(@question)
+      - if can? :destroy, link
       p = link_to 'Delete link', link_path(link.id), method: :delete, remote: true
 
   - if answer.files.attached?
@@ -22,14 +22,15 @@
       p id="attachment_#{file.id}"
         = link_to file.filename.to_s, url_for(file)
         br
-        - if current_user&.author?(answer)
+        - if can? :destroy, file
           = link_to 'Delete the file', attachment_path(file.id), method: :delete, remote: true
 
-  - if current_user&.author?(answer.question)
+  - if can? :update, answer
     = link_to 'Choose', best_answer_path(answer), remote: true, method: :patch
 
-  - if current_user&.author?(answer)
+  - if can? :destroy, answer
     p= link_to 'Delete the answer', answer_path(answer), method: :delete
+  - if can? :update, answer
     p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
 
   = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" } do |f|
