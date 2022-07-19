@@ -52,5 +52,5 @@
 .answer_comments
   p Comments:
   = render answer.comments
-- if current_user
+- if can? :create, Comment
   = render 'comments/form_answer', answer: answer    
