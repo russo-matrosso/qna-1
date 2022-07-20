@@ -12,7 +12,7 @@ p = render 'shared/vote', resource: question
         p id="attachment_#{file.id}"
           = link_to file.filename.to_s, url_for(file)
           br
-          - if current_user&.author?(@question)
+          - if can? :destroy, file
             = link_to 'Delete the file', attachment_path(file.id), method: :delete, remote: true
 
   .links
@@ -23,7 +23,7 @@ p = render 'shared/vote', resource: question
       - if link.is_a_gist?
         = javascript_include_tag link.url + '.js'
 
-      - if current_user&.author?(@question)
+      - if can? :destroy, link
         p = link_to 'Delete link', link_path(link.id), method: :delete, remote: true
 
   .award
@@ -34,8 +34,9 @@ p = render 'shared/vote', resource: question
       = image_tag(@question.award.image, size: "50x50")
 
 
-  - if current_user&.author?(@question)
+  - if can? :destroy, @question
     p= link_to 'Delete the question', question_path(@question), method: :delete
+  - if can? :update, @question
     p= link_to 'Edit the question', '#', class: 'edit-question-link', data: { question_id: question.id }
 
     = form_with model: @question, class: 'hidden', local: false, html: { id: "edit-question-#{question.id}" } do |f|
@@ -61,5 +62,5 @@ p = render 'shared/vote', resource: question
   .question_comments
     p Comments
     = render question.comments
-  - if current_user
+  - if can? :create, Comment
     = render 'comments/form_question', resource: question

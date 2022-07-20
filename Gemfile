@@ -26,6 +26,7 @@ gem 'omniauth-rails_csrf_protection'
 gem 'omniauth-vkontakte'
 gem 'rubocop-rails'
 gem 'capybara-email'
+gem 'cancancan'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
