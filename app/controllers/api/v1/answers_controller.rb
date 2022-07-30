@@ -1,14 +1,14 @@
 class Api::V1::AnswersController < Api::V1::BaseController
-	before_action :find_question, only: [:create ]
-	before_action :find_answer, only: %i[ show update destroy ]
+  before_action :find_question, only: [:create ]
+  before_action :find_answer, only: %i[ show update destroy ]
 
-	authorize_resource
+  authorize_resource
 
-	def show
-		render json: @answer, serializer: AnswerFullSerializer
-	end
+  def show
+    render json: @answer, serializer: AnswerFullSerializer
+  end
 
-	def create
+  def create
     @answer = @question.answers.create(answer_params)
     @answer.author = current_resource_owner
 
@@ -20,7 +20,6 @@ class Api::V1::AnswersController < Api::V1::BaseController
   end
 
   def update
-    #authorize! :update, @answer
 
     if @answer.update(answer_params)
       render json: @answer, status: :accepted
@@ -30,16 +29,14 @@ class Api::V1::AnswersController < Api::V1::BaseController
   end
 
   def destroy
-    #authorize! :destroy, @answer
-
     @answer.destroy
     render json: { messages: ['Your answer deleted'] }
   end
 
 
-	private
+  private
 
-	def answer_params
+  def answer_params
     params.require(:answer).permit(:body)
   end
 
@@ -47,7 +44,7 @@ class Api::V1::AnswersController < Api::V1::BaseController
     @question = Question.find(params[:question_id])
   end
 
-	def find_answer
+  def find_answer
     @answer = Answer.find(params[:id])
   end
 end
