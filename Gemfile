@@ -27,6 +27,9 @@ gem 'omniauth-vkontakte'
 gem 'rubocop-rails'
 gem 'capybara-email'
 gem 'cancancan'
+gem 'doorkeeper'
+gem 'active_model_serializers', '~> 0.10'
+gem 'oj'
 
 # Use CoffeeScript for .coffee assets and views
 gem 'coffee-rails', '~> 4.2'
