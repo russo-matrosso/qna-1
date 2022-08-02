@@ -2,6 +2,7 @@ class Answer < ApplicationRecord
   include Votable
   include Commentable
 
+  belongs_to :user
   belongs_to :question
   belongs_to :author, class_name: 'User', foreign_key: 'user_id'
   has_many :links, dependent: :destroy, as: :linkable
@@ -16,5 +17,13 @@ class Answer < ApplicationRecord
   def mark_as_best
     question.update(best_answer_id: id)
     question.award&.update!(user: author)
+  end
+
+  after_create :send_notification
+
+  private
+
+  def send_notification
+    NotificationsJob.perform_later(self)
   end
 end
