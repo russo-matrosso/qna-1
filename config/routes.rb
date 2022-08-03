@@ -48,6 +48,7 @@ Rails.application.routes.draw do
     resources :answers, concerns: %i[voted commented], shallow: true do
       patch 'best', on: :member
     end
+    resources :subscriptions, only: [:create, :destroy], shallow: true
   end
 
   root to: 'questions#index'
