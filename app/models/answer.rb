@@ -17,4 +17,12 @@ class Answer < ApplicationRecord
     question.update(best_answer_id: id)
     question.award&.update!(user: author)
   end
+
+  after_create :send_notification
+
+  private
+
+  def send_notification
+    NotificationsJob.perform_later(self)
+  end
 end

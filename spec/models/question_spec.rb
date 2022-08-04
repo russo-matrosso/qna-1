@@ -7,6 +7,7 @@ RSpec.describe Question, type: :model do
     it { should belong_to(:author).class_name('User') }
     it { should belong_to(:best_answer).class_name('Answer').optional }
     it { should have_many(:votes).dependent(:destroy) }
+    it { should have_many(:subscriptions).dependent(:destroy) }
   end
 
   describe 'validations' do

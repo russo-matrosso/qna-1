@@ -59,6 +59,9 @@ p = render 'shared/vote', resource: question
       
       = f.submit 'Save'
 
+  .subscription      
+    = render 'subscriptions/subscription', resource: question
+
   .question_comments
     p Comments
     = render question.comments

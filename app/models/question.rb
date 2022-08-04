@@ -10,6 +10,7 @@ class Question < ApplicationRecord
   has_one :award, dependent: :destroy
   has_many :votes, dependent: :destroy, as: :votable
   has_many :comments, dependent: :destroy, as: :commentable
+  has_many :subscriptions, dependent: :destroy
 
   has_many_attached :files
 
@@ -17,8 +18,13 @@ class Question < ApplicationRecord
   accepts_nested_attributes_for :award, reject_if: :all_blank
 
   validates :title, :body, presence: true
+  after_create :create_subscription
 
   def other_answers
     answers.where.not(id: best_answer_id)
+  end
+
+  def create_subscription
+    subscriptions.create(user: author)
   end
 end
