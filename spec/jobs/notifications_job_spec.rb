@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe NotificationsJob, type: :job do
-	let(:service) { double('Service::Notifications')}
-	let(:user) { create(:user) }
+  let(:service) { double('Service::Notifications')}
+  let(:user) { create(:user) }
   let(:question) { create(:question, author: user) }
   let(:answer) { create(:answer, question: question, author: user) }
 
