@@ -12,14 +12,21 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-
-
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
 
     <%= render 'shared/nav' %>
 
+    <% unless notice.nil? %>
+    <div class="alert alert-success" role="alert"><%= notice %></div>
+    <% end %>
+
+
+    <% unless alert.nil? %>
+    <div class="alert alert-danger" role="alert"><%= alert %></div>
+    <% end %>
+
     <%= yield %>
+
+
   </body>
 </html>
