@@ -10,6 +10,7 @@ set :repo_url, "git@github.com:leri-berry/qna.git"
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/home/deployer/qna"
 set :deploy_user, 'deployer'
+set :pty, false
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
