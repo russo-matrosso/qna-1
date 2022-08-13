@@ -6,9 +6,6 @@
 server "81.91.190.74", user: "deployer", roles: %w{app db web}, primary: true
 set :rails_env, :production
 
-set :rvm_map_bins, [ 'bundle', 'rails', 'rake', 'setup', 'webpack', 'webpack-dev-server', 'yarn' , 'sidekiq']
-set :sidekiq_monit_use_sudo, false
-
 
 # role-based syntax
 # ==================
