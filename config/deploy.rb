@@ -2,7 +2,7 @@
 lock "~> 3.17.1"
 
 set :application, "qna"
-set :repo_url, "git@github.com:leri-berry/qna.git"
+set :repo_url, "git@github.com:russo-matrosso/qna-1"
 
 # Default branch is :master
 # ask :branch, `git rev-parse --abbrev-ref HEAD`.chomp
@@ -11,6 +11,9 @@ set :repo_url, "git@github.com:leri-berry/qna.git"
 set :deploy_to, "/home/deployer/qna"
 set :deploy_user, 'deployer'
 set :pty, false
+set :default_env, { rvm_bin_path: '~/.rvm/bin' }
+# set :rvm_custom_path, '/usr/share/rvm'
+# set :bundle_flags, "--system"
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh
@@ -26,7 +29,7 @@ set :pty, false
 append :linked_files, "config/database.yml", "config/master.key"
 
 # Default value for linked_dirs is []
-append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "tmp/webpacker", "public/system", "vendor", "storage"
+append :linked_dirs, "log", "tmp/pids", "tmp/cache", "tmp/sockets", "tmp/webpacker", "public/system", "vendor", "storage", ".bundle"
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
